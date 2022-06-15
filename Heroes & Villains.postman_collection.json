@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "52d10827-df17-4cf8-b361-36c0de2b79fd",
-		"name": "Heroes_Villains",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "c509f756-1ab4-470b-b689-b9df951cfe34",
+		"name": "Heroes & Villains",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20330481"
 	},
 	"item": [
 		{
@@ -10,9 +11,16 @@
 			"item": [
 				{
 					"name": "Get_All_Supers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://127.0.0.1:8000/supers/",
 							"protocol": "http",
@@ -33,9 +41,16 @@
 				},
 				{
 					"name": "Get_All_Heroes (Param)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://127.0.0.1:8000/supers?super_type=hero",
 							"protocol": "http",
@@ -47,12 +62,11 @@
 							],
 							"port": "8000",
 							"path": [
-
 								"supers"
 							],
 							"query": [
 								{
-									"key": "type",
+									"key": "super_type",
 									"value": "hero"
 								}
 							]
@@ -66,7 +80,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/supers?super_type=villain",
+							"raw": "http://127.0.0.1:8000/supers?super_type=villain",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -80,7 +94,7 @@
 							],
 							"query": [
 								{
-									"key": "type",
+									"key": "super_type",
 									"value": "villain"
 								}
 							]
@@ -90,11 +104,18 @@
 				},
 				{
 					"name": "Get_Super_By_Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/supers/1/",
+							"raw": "http://127.0.0.1:8000/supers/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -105,7 +126,6 @@
 							"port": "8000",
 							"path": [
 								"supers",
-								"1",
 								""
 							]
 						}
@@ -119,7 +139,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Joker Two\",\r\n    \"alter_ego\": \"Jack Napier\",\r\n    \"primary_ability\": \"Chemical engineering\",\r\n    \"secondary_ability\": \"Razor-tipped playing cards\",\r\n    \"catchphrase\": \"Why so serious\",\r\n    \"super_type_id\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"Hulk\",\r\n    \"alter_ego\": \"Bruce Banner\",\r\n    \"primary_ability\": \"Super Strength\",\r\n    \"secondary_ability\": \"Thunderclap\",\r\n    \"catchphrase\": \"Hulk Smash!\",\r\n    \"super_type_id\": \"4\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -151,7 +171,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Joker Two\",\r\n    \"alter_ego\": \"Jack Napier\",\r\n    \"primary_ability\": \"Chemical engineering\",\r\n    \"secondary_ability\": \"Razor-tipped playing cards\",\r\n    \"catchphrase\": \"Why so seriousssssssssssss\",\r\n    \"super_type_id\": 2\r\n}",
+							"raw": "{\r\n    \"name\": \"Superman\",\r\n    \"alter_ego\": \"Clark Kent\",\r\n    \"primary_ability\": \"Flight\",\r\n    \"secondary_ability\": \"X-ray Vision\",\r\n    \"catchphrase\": \"Up, up, and away!\",\r\n    \"super_type\": \"Hero\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -159,7 +179,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/supers/17/",
+							"raw": "http://127.0.0.1:8000/supers/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -170,7 +190,6 @@
 							"port": "8000",
 							"path": [
 								"supers",
-								"17",
 								""
 							]
 						}
@@ -183,7 +202,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/supers/5/",
+							"raw": "http://127.0.0.1:8000/supers/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -194,7 +213,6 @@
 							"port": "8000",
 							"path": [
 								"supers",
-								"5",
 								""
 							]
 						}
@@ -204,16 +222,13 @@
 			]
 		},
 		{
-			"name": "Super_Types (super_types App - Bonus Requests)",
+			"name": "Super_Types (super_types App - bonus Requests)",
 			"item": [
 				{
 					"name": "Get_All_Super_Types",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
+						"header": []
 					},
 					"response": []
 				},
@@ -221,27 +236,15 @@
 					"name": "Get_Super_Type_By_Id",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
+						"header": []
 					},
 					"response": []
 				},
 				{
-					"name": "Create_Super_Type",
+					"name": "Creat_Super_Type",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						}
+						"header": []
 					},
 					"response": []
 				},
