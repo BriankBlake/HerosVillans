@@ -1,5 +1,4 @@
 """heroes_villains_project URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
 Examples:
@@ -18,5 +17,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('supers/', include('supers.urls')),
+    path('api/supers/', include('supers.urls')),
+    path('api/super_types/', include('super_types.urls')),
 ]

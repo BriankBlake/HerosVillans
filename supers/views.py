@@ -1,82 +1,41 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework import status
-from super_types.models import Super_Type
 from .serializers import SuperSerializer
 from .models import Super
-from supers import serializers
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import generics
 
+#class SuperList(generics.ListCreateAPIView):
+#    queryset = Super.objects.all()
+#    serializer_class = SuperSerializer
 
-@api_view(['GET', 'POST'])
-def supers_list(request):
-   
-    if request.method == 'GET':
-        
-        super_type = request.query_params.get('super_type')
-        print(super_type)
+class SuperDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Super.objects.all()
+    serializer_class = SuperSerializer
+
+class SuperList(APIView):
+    def get(self, request, format=None):
+        super_type_name = request.query_params.get('type')
         queryset = Super.objects.all()
-        if super_type:
-            queryset = queryset.filter(super_type__type=super_type)
-        serializer = SuperSerializer(queryset, many=True)
-        return Response(serializer.data)
-    
-        # supers = Super.objects.all()
-        # serializer = SuperSerializer(supers, many=True)
-        # return Response(serializer.data)
-    elif request.method == 'POST':
+        if super_type_name:
+            queryset = queryset.filter(super_type__type=super_type_name)
+            type_serializer = SuperSerializer(queryset, many=True)
+            return Response(type_serializer.data)
+        custom_response = {}
+        heroes = Super.objects.filter(super_type_id=4)
+        villains = Super.objects.filter(super_type_id=5)
+        hero_serializer = SuperSerializer(heroes, many=True)
+        villain_serializer = SuperSerializer(villains, many=True)
+        custom_response = {
+            "Heroes": hero_serializer.data,
+            "Villains": villain_serializer.data,
+        }
+        return Response(custom_response)
+
+    def post(self, request, format=None):
         serializer = SuperSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-   
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def super_detail(request, pk):
-   super = get_object_or_404(Super, pk=pk)
-   if request.method == 'GET':
-    serializer = SuperSerializer(super)
-    return Response(serializer.data)
-   elif request.method == 'PUT':
-       serializer = SuperSerializer(super, data=request.data)
-       serializer.is_valid(raise_exception=True)
-       serializer.save()
-       return Response(serializer.data)
-   elif request.method == 'DELETE':
-       super.delete()
-       return Response(status=status.HTTP_204_NO_CONTENT)
-   
-# @api_view(['GET'])
-# def supers_list(request):
-#     super_type_param = request.query_params.get('super_type')
-#     sort_param = request.query_params.get('sort')
-    
-#     print(super_type_param)
-#     print(sort_param)
-
-# @api_view(['GET'])
-# def supers_list(request):
-#     super_type_param = request.queery_params.get('super_type')
-#     sort_param = request.query_params.get('sort')
-#     supers = Super.objects.all()
-    
-#     if super_type_param:
-#         supers = supers.filter(super_type__type=super_type_param)
-    
-#     if sort_param:
-#         supers = supers.order_by(sort_param)
-        
-#     serializer = SuperSerializer(supers, many=True)
-#     return Response(serializer.data)
-
-@api_view(['GET'])
-def super_type_list(request):
-    super_types = Super_Type.objects.all()
-    supers_type = {}
-    for super_type in super_types:
-        supers = Super.objects.filter(super_type_id=super_type.id)
-        super_serializer = SuperSerializer(supers, many=True)
-        supers_type[super_type.type] = {
-            'type': super_type.type
-        }   
-    return Response(supers_type)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
